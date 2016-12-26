@@ -1,5 +1,5 @@
-# php-7-fpm-nginx
-Docker setup for php-7 fpm on Nginx with mysql
+# php-7-angular
+Docker setup for php-7 fpm on Nginx with mysql and AngularJS
 
 ###Requirements:
 docker-compose (and all pre-reqs)
