@@ -1,0 +1,42 @@
+version: '2'
+
+services:
+    app:
+      image: nginx:latest
+      ports:
+        - "8080:80"
+      volumes:
+        - ./app:/var/www/html
+        - ./docker/php/site.conf:/etc/nginx/conf.d/default.conf
+      environment:
+        - APP_ENV=development
+        - APP_DEBUG=true
+
+    php:
+      build: docker/php
+      volumes:
+        - ./app:/var/www/html
+        - ./docker/php/log.conf:/usr/local/etc/php-fpm.d/zz-log.conf
+
+    db:
+      image: mysql/mysql-server
+      ports:
+        - "3306:3306"
+      volumes:
+        - /var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: mysql4Root
+        MYSQL_USER: dev
+        MYSQL_PASSWORD: mysql4Dev
+        MYSQL_DATABASE: app
+
+    front:
+      image: nginx:latest
+      ports:
+        - "8080:80"
+      volumes:
+        - ./front:/var/www/html
+        - ./docker/angular/site.conf:/etc/nginx/conf.d/default.conf
+
+    node:
+      image: node:latest
